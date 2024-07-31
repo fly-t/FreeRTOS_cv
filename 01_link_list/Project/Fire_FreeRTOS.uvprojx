@@ -337,7 +337,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\User;..\freertos\include;..\freertos\portable\RVDS\ARM_CM3;..\Rtos;..\Rtos\port</IncludePath>
+              <IncludePath>..\User;..\freertos\include;..\freertos\portable\RVDS\ARM_CM3;..\Rtos;..\Rtos\port;..\Rtos\base</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -419,7 +419,7 @@
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Rtos\list.c</FilePath>
+              <FilePath>..\Rtos\base\list.c</FilePath>
             </File>
           </Files>
         </Group>
