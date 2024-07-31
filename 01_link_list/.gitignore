@@ -1,0 +1,4 @@
+Project/Objects/
+
+!MDK-ARM/.vscode/c_cpp_properties.json
+!MDK-ARM/RTE/_Project/RTE_Components.h
