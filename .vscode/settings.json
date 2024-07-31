@@ -3,6 +3,8 @@
         "*.qmd": "markdown",
         "*.md": "markdown",
         "portmacro.h": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "list.h": "c",
+        "freertos.h": "c"
     }
 }

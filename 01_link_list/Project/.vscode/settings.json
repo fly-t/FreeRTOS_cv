@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.qmd": "markdown",
+        "*.md": "markdown",
+        "list.h": "c"
+    }
+}
