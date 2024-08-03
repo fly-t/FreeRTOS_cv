@@ -29,7 +29,7 @@ void task1_entry(void *p_arg)
     while (1)
     {
 			flag1 = 1;
-			delay( 100 );		
+ 			delay( 100 );		
 			flag1 = 0;
 			delay( 100 );
 
