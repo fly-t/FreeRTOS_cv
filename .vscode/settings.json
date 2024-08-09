@@ -6,6 +6,7 @@
         "stdint.h": "c",
         "list.h": "c",
         "freertos.h": "c",
-        "portable.h": "c"
+        "portable.h": "c",
+        "task.h": "c"
     }
 }
