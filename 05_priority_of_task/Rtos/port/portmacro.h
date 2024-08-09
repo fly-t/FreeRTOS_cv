@@ -41,17 +41,41 @@ typedef unsigned long UBaseType_t;
 	#define portMAX_DELAY ( TickType_t ) 0xffffffffUL
 #endif
 
+#ifndef portFORCE_INLINE
+#define portFORCE_INLINE __forceinline
+#endif
+
+#ifndef configUSE_PORT_OPTIMISED_TASK_SELECTION
+#define configUSE_PORT_OPTIMISED_TASK_SELECTION 1
+#endif
+
+#if configUSE_PORT_OPTIMISED_TASK_SELECTION == 1
+
+/* 检测优先级配置 */
+#if (configMAX_PRIORITIES > 32)
+#error configUSE_PORT_OPTIMISED_TASK_SELECTION can only be set to 1 when configMAX_PRIORITIES is less than or equal to 32.  It is very rare that a system requires more than 10 to 15 difference priorities as tasks that share a priority will time slice.
+#endif
+
+/* 使用优化选项时:根据优先级设置/清除优先级位图中相应的位 */
+#define portRECORD_READY_PRIORITY(uxPriority, uxReadyPriorities) (uxReadyPriorities) |= (1UL << (uxPriority))
+#define portRESET_READY_PRIORITY(uxPriority, uxReadyPriorities) (uxReadyPriorities) &= ~(1UL << (uxPriority))
+
+/*-----------------------------------------------------------*/
+
+#define portGET_HIGHEST_PRIORITY(uxTopPriority, uxReadyPriorities) uxTopPriority = (31UL - (uint32_t)__clz((uxReadyPriorities)))
+
+#endif /* taskRECORD_READY_PRIORITY */
 
 /* 中断控制状态寄存器：0xe000ed04
- * Bit 28 PENDSVSET: PendSV 悬起位
- */
-#define portNVIC_INT_CTRL_REG		( * ( ( volatile uint32_t * ) 0xe000ed04 ) )
-#define portNVIC_PENDSVSET_BIT		( 1UL << 28UL )
+* Bit 28 PENDSVSET: PendSV 悬起位
+*/
+#define portNVIC_INT_CTRL_REG (*((volatile uint32_t *)0xe000ed04))
+#define portNVIC_PENDSVSET_BIT (1UL << 28UL)
 
-#define portSY_FULL_READ_WRITE		( 15 )
+#define portSY_FULL_READ_WRITE (15)
 
-/* __isb: 指令用于确保之前所有的指令执行完成并刷新指令缓存后，才允许继续执行后续的指令 */
-/* __dsb: 用于确保在它之前的所有数据访问操作完成后，才允许后续的操作继续进行 */
+    /* __isb: 指令用于确保之前所有的指令执行完成并刷新指令缓存后，才允许继续执行后续的指令 */
+    /* __dsb: 用于确保在它之前的所有数据访问操作完成后，才允许后续的操作继续进行 */
 #define portYIELD()                                           \
         {                                                     \
         /* 触发PendSV，产生上下文切换 */                        \
